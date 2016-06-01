@@ -1,0 +1,23 @@
+{
+  "name": "diycms",
+  "version": "1.0.0",
+  "description": "a diy topic site",
+  "main": "serve.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/angck/DiyCMS.git"
+  },
+  "keywords": [
+    "Diy",
+    "CMS"
+  ],
+  "author": "wangzhixiang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/angck/DiyCMS/issues"
+  },
+  "homepage": "https://github.com/angck/DiyCMS#readme"
+}
