@@ -1,0 +1,23 @@
+<% layout('layout') %>
+<%= title %>
+<script src="/js/lib/sea.js"></script>
+<script>
+    seajs.use(['jquery'], function($) {
+        $.ajax({
+            url: '/user/create',
+            type: 'POST',
+            dataType: 'json',
+            data: {username: 'wangzhixiang', password: 'wangzhixiang', email: 'wangzhixiang', nick: '王志祥'},
+        })
+        .done(function(data) {
+            console.log(data);
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
+    })
+</script>

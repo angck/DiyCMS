@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+/**
+ * 表单
+ * @Name: _form.scss v1.0.0
+ * @Author: 王志祥
+ * @Update: 2016-03-31 14:28
+ */
+
+.form-group {
+    input {
+        height: 20px;
+        line-height: 20px;
+        padding: 6px;
+        border: 1px solid $color-border;
+        border-radius: 2px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0, .075);
+        -moz-box-shadow: inset 0 1px 1px rgba(0,0,0, .075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0, .075);
+        transition: border-color .5s, box-shadow .5s;
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 5px darken($color-border, 30%) inset;
+        }
+    }
+}

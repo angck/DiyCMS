@@ -1,0 +1,10 @@
+@charset "UTF-8";
+/**
+ * 设置透明背景
+ * @param  {RGBA} $rbga rgba属性值
+ * @return
+ */
+@mixin alpha-bg($rbga) {
+    background: $rgba;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($rgba)}', endColorstr='#{ie-hex-str($rgba)}', gradientType=0);
+}

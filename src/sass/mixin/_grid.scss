@@ -1,0 +1,149 @@
+@charset "UTF-8";
+
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++
+ * 网格系统
+ * @Name:   _grid.scss
+ * @Update: 2016-03-29 14:54
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+// Defaults which you can freely override
+$column-width: 4% !default;
+$gutter-width: 1% !default;
+$columns: 20 !default;
+$total-width: 100% !default;
+
+// Uncomment these two lines and the star-hack width/margin lines below to enable sub-pixel fix for IE6 & 7. See http://tylertate.com/blog/2012/01/05/subpixel-rounding.html
+// ie6、7对百分比的计算规则是四舍五入；为了hack我们需要将五入变成舍去；
+// eg:12.5px变成12px,12.75px变成12.25;公式为:O.5 / containerWidth = correctionLevel
+// 因此要hackie 就需要计算出存在五入的容器的宽度
+$min-width: 9999999 !default;
+$isFix: false !default;
+
+////////////////////////////////////////////////////////////////////////////////
+// HELPER CLASSES
+////////////////////////////////////////////////////////////////////////////////
+
+$class_row: 'row';
+$class_column:'col';
+$class_push:'push';
+$class_pull:'pull';
+
+
+////////////////////////////////////////////////////////////////////////////////
+// GRID MATH
+////////////////////////////////////////////////////////////////////////////////
+
+// Utility function — you should never need to modify this
+@function gridSystem-width($columns:$columns) {
+    @return ($column-width * $columns) + ($gutter-width * $columns);
+}
+
+@function correction($columns:$columns) {
+    @return 0.5 / $min-width * gridSystem-width($columns);
+}
+//@param x {num} 列数
+//@param columns {num} 父级列数,默认初始值
+//@return 返回所需要的列宽
+@function width($x,$columns:$columns) {
+    @return $total-width*(((($gutter-width+$column-width)*$x)-$gutter-width) / gridSystem-width($columns));
+}
+
+//@param x {num} 列数
+//@param columns {num} 父级列数,默认初始值
+//@return 返回所需要的列的间距宽度
+@function margin($columns:$columns) {
+    @return $total-width*(($gutter-width*.5)/gridSystem-width($columns));
+}
+////////////////////////////////////////////////////////////////////////////////
+// BASIC MIXINS
+////////////////////////////////////////////////////////////////////////////////
+
+@mixin clear() {
+    *zoom:1;
+
+    &:before,
+    &:after {
+        content:"";
+        display:table;
+    }
+    &:after {
+        clear:both;
+    }
+}
+
+//@param x {num} 列数
+//@param columns {num} 父级列数,默认初始值
+@mixin column($x,$columns:$columns) {
+    float: left;
+    width: width($x);
+    margin-left: margin();
+    margin-right: margin();
+    display: inline;
+    zoom:1;
+    @if $isFix{
+        @include column-fix-ie6-ie7($x,$columns:$columns);
+    }
+}
+
+@mixin column-fix-ie6-ie7($x,$columns:$columns) {
+    *width: width($x) - correction($columns);
+    *margin-right: margin() - correction($columns);
+    *margin-left: margin() - correction($columns);
+}
+
+@mixin row($columns:$columns) {
+    display: block;
+    width: $total-width*(($gutter-width+gridSystem-width($columns))/gridSystem-width($columns));
+    margin: 0 -1*margin();
+    @if $isFix{
+        @include row-fix-ie6-ie7($columns:$columns);
+    }
+    @include clear();
+}
+
+@mixin row-fix-ie6-ie7($columns:$columns) {
+    *width: $total-width*(($gutter-width + gridSystem-width($columns))/gridSystem-width($columns)) - correction($columns);
+    *margin-left: -1*margin() - correction($columns);
+    *margin-right: -1*margin() - correction($columns);
+}
+
+@mixin push($offset:1) {
+    margin-left: $total-width*((($gutter-width+$column-width)*$offset) / gridSystem-width($columns)) + margin();
+}
+
+@mixin pull($offset:1) {
+    margin-right: $total-width*((($gutter-width+$column-width)*$offset) / gridSystem-width($columns)) + margin();
+}
+
+
+@mixin generate_helper_classes(){
+
+    /* Helper Class: Columns */
+    @for $i from 1 through $columns{
+        .#{$class_column}#{$i} {
+            @include column($i)
+        }
+
+        .#{$class_row}#{$i} {
+            @include row($i)
+        }
+
+        @for $j from $i through $columns{
+            .#{$class_column}#{$i}-#{$j} {
+                @include column($i,$j)
+            }
+        }
+    }
+
+
+    @for $i from 1 through ($columns - 1){
+        .#{$class_push}#{$i} {
+            @include push($i);
+        }
+
+        .#{$class_pull}#{$i} {
+            @include pull($i);
+        }
+    }
+
+}

@@ -1,0 +1,17 @@
+@charset "UTF-8";
+// GRID
+@import 'mixin/grid';
+//栅格系统配置
+// $columns: 12;
+// $column-width: 90px;
+// $gutter-width: 10px;
+
+// //液态设置100%；固态设置固定px,如：$total-width: 1000px;
+// $total-width: 1200px;
+
+// //针对ie6&ie7的hack;
+// $min-width: 1200px;
+
+$isFix: true;
+
+@include generate_helper_classes();

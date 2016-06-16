@@ -1,0 +1,52 @@
+@charset "UTF-8";
+// Variables and mixins
+@import "../variables";
+@import "../mixins";
+
+@import "../sprite";
+@import "../iconfont";
+
+body,html {
+    height: 100%;
+    overflow: hidden;
+}
+
+.wrapper {
+    background: #222;
+    height: 100%;
+    overflow: hidden;
+}
+
+.loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    margin: -92px 0 0 -150px;
+
+    h1 {
+        color: #fff;
+        text-align: center;
+        font-size: 22px;
+        line-height: 30px;
+    }
+
+    .form-group {
+        padding: 0 0 0 14px;
+        margin: 10px 0;
+    }
+
+    input {
+        border-color: transparent;
+        width: 100%;
+        padding: 10px 6px;
+        margin-left: -14px;
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .btn {
+        width: 298px;
+    }
+}
